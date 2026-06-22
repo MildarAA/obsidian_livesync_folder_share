@@ -1,3 +1,5 @@
+This code is extremly vibecoded. use at own risk!
+
 # obsidian_livesync_folder_share
 
 This project synchronises one subtree between two CouchDB databases used by Obsidian LiveSync.
