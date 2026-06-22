@@ -1,0 +1,11 @@
+.env
+secrets/*
+!secrets/.gitkeep
+!secrets/*.example
+data/*
+!data/.gitkeep
+logs/*
+!logs/.gitkeep
+.venv/
+__pycache__/
+*.pyc

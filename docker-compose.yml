@@ -1,0 +1,36 @@
+services:
+  obsidian_livesync_folder_share:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: obsidian_livesync_folder_share:latest
+    env_file:
+      - .env
+    environment:
+      COUCHDB_USER_FILE: /run/secrets/couchdb_user
+      COUCHDB_PASSWORD_FILE: /run/secrets/couchdb_password
+      LIVESYNC_PASSPHRASE_FILE: /run/secrets/livesync_passphrase
+      STATE_FILE: /data/state.json
+      LOG_FILE: /logs/sync.log
+    secrets:
+      - couchdb_user
+      - couchdb_password
+      - livesync_passphrase
+    volumes:
+      - ./data:/data
+      - ./logs:/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "/app/sync.py", "--healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+secrets:
+  couchdb_user:
+    file: ./secrets/couchdb_user.txt
+  couchdb_password:
+    file: ./secrets/couchdb_password.txt
+  livesync_passphrase:
+    file: ./secrets/livesync_passphrase.txt
